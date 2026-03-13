@@ -4,51 +4,82 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Attention schedule</title>
+
 <style>
-html,body{margin:0;padding:0;background:#fff;}
-#cnn-attention-widget{margin:0;padding:0;}
+html,body{
+margin:0;
+padding:0;
+background:#fff;
+}
+#cnn-attention-widget{
+margin:0;
+padding:0;
+}
 </style>
+
 </head>
+
 <body>
 
 <div id="cnn-attention-widget">
-  <div id="svelte-app"></div>
-  <link rel="stylesheet" href="https://ix.cnn.io/dailygraphics/graphics/20260207-attention-span-schedule/assets/main-exS1okLC.css">
-  <script src="https://ix.cnn.io/dailygraphics/graphics/20260207-attention-span-schedule/assets/main-BSPffga8.js"></script>
+<div id="svelte-app"></div>
+
+<link rel="stylesheet" href="https://ix.cnn.io/dailygraphics/graphics/20260207-attention-span-schedule/assets/main-exS1okLC.css">
+<script src="https://ix.cnn.io/dailygraphics/graphics/20260207-attention-span-schedule/assets/main-BSPffga8.js"></script>
 </div>
 
 <script>
 (function(){
-  const root=document.getElementById("cnn-attention-widget");
-  const map={
-    "Click + drag the":"Arraste o",
-    "Click + drag":"Arraste",
-    "pink dot":"ponto cor-de-rosa",
-    "pink":"cor-de-rosa",
-    "most attentive":"mais atento",
-    "attentive":"atento",
-    "Focus peak":"Pico de concentração",
-    "Low attention":"Baixa atenção",
-    "Break window":"Pausa",
-    "Start over":"Recomeçar",
-    "Next →":"Seguinte →",
-    "+ Add time block":"+ Adicionar período",
-    "break":"pausa"
-  };
-  function translateNode(node){
-    if(node.nodeType===3){
-      let txt=node.nodeValue;
-      for(const[en,pt]of Object.entries(map)){txt=txt.replaceAll(en,pt);}
-      node.nodeValue=txt;
-    }
-    node.childNodes.forEach(translateNode);
-  }
-  setInterval(()=>translateNode(root),400);
+
+const root=document.getElementById("cnn-attention-widget");
+
+const map={
+"Click + drag the":"Arraste o",
+"Click + drag":"Arraste",
+"pink dot":"ponto cor-de-rosa",
+"pink":"cor-de-rosa",
+"most attentive":"mais atento",
+"attentive":"atento",
+"Focus peak":"Pico de concentração",
+"Low attention":"Baixa atenção",
+"Break window":"Pausa",
+"Start over":"Recomeçar",
+"Next →":"Seguinte →",
+"+ Add time block":"+ Adicionar período",
+"break":"pausa"
+};
+
+function translateNode(node){
+
+if(node.nodeType===3){
+
+let txt=node.nodeValue;
+
+for(const[en,pt]of Object.entries(map)){
+txt=txt.replaceAll(en,pt);
+}
+
+node.nodeValue=txt;
+
+}
+
+node.childNodes.forEach(translateNode);
+
+}
+
+setInterval(()=>translateNode(root),400);
+
 })();
 </script>
 
-<!-- Auto-altura do iframe -->
-<script src="https://cdn.jsdelivr.net/npm/iframe-resizer/js/iframeResizer.contentWindow.min.js"></script>
+<script>
+const ro=new ResizeObserver(entries=>{
+const h=document.documentElement.scrollHeight;
+parent.postMessage({attentionHeight:h},"*");
+});
+
+ro.observe(document.body);
+</script>
 
 </body>
 </html>
