@@ -183,6 +183,17 @@ obs.observe(document.body,{childList:true,subtree:true});
 </script>
 <script src="https://cdn.jsdelivr.net/npm/iframe-resizer/js/iframeResizer.contentWindow.min.js"></script>
 
+<script>
+function sendHeight(){
+  var h = document.documentElement.scrollHeight || document.body.scrollHeight;
+  parent.postMessage({iframeHeight:h},"*");
+}
+
+window.addEventListener("load",sendHeight);
+window.addEventListener("resize",sendHeight);
+
+setInterval(sendHeight,500);
+</script>
 
 </body>
 </html>
