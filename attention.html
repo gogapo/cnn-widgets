@@ -169,6 +169,15 @@ setInterval(run,350);
 
 })();
 </script>
+<script>
+function sendHeight(){
+var h=document.documentElement.scrollHeight||document.body.scrollHeight;
+parent.postMessage({cnnHeight:h},"*");
+}
+
+window.addEventListener("load",sendHeight);
+setInterval(sendHeight,500);
+</script>
 
 </body>
 </html>
