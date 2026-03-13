@@ -171,13 +171,18 @@ setInterval(run,350);
 </script>
 <script>
 function sendHeight(){
-var h=document.documentElement.scrollHeight||document.body.scrollHeight;
-parent.postMessage({cnnHeight:h},"*");
+  const h = document.documentElement.scrollHeight || document.body.scrollHeight;
+  parent.postMessage({cnnHeight:h},"*");
 }
 
 window.addEventListener("load",sendHeight);
-setInterval(sendHeight,500);
+window.addEventListener("resize",sendHeight);
+
+// envia também quando o DOM muda
+const obs = new MutationObserver(sendHeight);
+obs.observe(document.body,{childList:true,subtree:true});
 </script>
+
 
 </body>
 </html>
